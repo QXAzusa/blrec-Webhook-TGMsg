@@ -12,11 +12,11 @@ async def recvMsg():
     if json_data["type"] == "LiveBeganEvent":
         username = json_data["data"]["user_info"]["name"]
         roomid = json_data["data"]["room_info"]["room_id"]
-        roomurl = 'https://live.bilibili.com' + roomid
+        roomurl = 'https://live.bilibili.com' + str(roomid)
         roomurl = urllib.parse.quote(roomurl)
-        tittle = json_data["data"]["room_info"]["tittle"]
+        title = json_data["data"]["room_info"]["title"]
         print("I:" + username + "开播了")
-        msg = username + '开播了%0A标题:' + tittle + '%0A' + roomurl
+        msg = username + '开播了%0A标题:' + title + '%0A' + roomurl
         url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + UID + '&text=' + msg
         await httpx.AsyncClient().post(url)
     elif json_data["type"] == "LiveEndedEvent":
