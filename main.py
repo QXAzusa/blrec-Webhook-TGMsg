@@ -25,13 +25,31 @@ async def recvMsg():
         msg = username + '下播了'
         url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + UID + '&text=' + msg
         await httpx.AsyncClient().post(url)
+    elif json_data["type"] == "RecordingStartedEvent":
+        username = json_data["data"]["user_info"]["name"]
+        print("I:开始录制" + username + "的直播")
+        msg = '开始录制' + username + '的直播'
+        url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + UID + '&text=' + msg
+        await httpx.AsyncClient().post(url)
+    elif json_data["type"] == "RecordingFinishedEvent":
+        username = json_data["data"]["user_info"]["name"]
+        print("I:完成" + username + "的直播录制")
+        msg = '完成' + username + '的直播录制'
+        url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + UID + '&text=' + msg
+        await httpx.AsyncClient().post(url)
+    elif json_data["type"] == "RecordingCancelledEvent":
+        username = json_data["data"]["user_info"]["name"]
+        print("I:取消" + username + "的直播录制")
+        msg = '取消' + username + '的直播录制'
+        url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + UID + '&text=' + msg
+        await httpx.AsyncClient().post(url)
     elif json_data["type"] == "SpaceNoEnoughEvent":
         print("W:磁盘空间不足")
         msg = urllib.parse.quote('警告：磁盘空间不足，请及时处理！')
         url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + UID + '&text=' + msg
         await httpx.AsyncClient().post(url)
     elif json_data["type"] == "Error":
-        print("W:程序发生错误")
+        print("E:程序发生错误")
         msg = urllib.parse.quote('警告：程序出现异常，请及时检查！')
         url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + UID + '&text=' + msg
         await httpx.AsyncClient().post(url)
