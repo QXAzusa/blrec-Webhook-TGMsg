@@ -12,7 +12,7 @@ async def recvMsg():
     if json_data["type"] == "LiveBeganEvent":
         username = json_data["data"]["user_info"]["name"]
         roomid = json_data["data"]["room_info"]["room_id"]
-        roomurl = 'https://live.bilibili.com' + str(roomid)
+        roomurl = 'https://live.bilibili.com/' + str(roomid)
         roomurl = urllib.parse.quote(roomurl)
         title = json_data["data"]["room_info"]["title"]
         print("I:" + username + "开播了")
